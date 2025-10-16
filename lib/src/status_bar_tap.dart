@@ -69,9 +69,7 @@ class StatusBarTap {
   final List<ScrollController> _scrollControllers = [];
 
   /// Initialize status bar tap functionality
-  void initialize({
-    required StatusBarTapConfig config,
-  }) {
+  void initialize({required StatusBarTapConfig config}) {
     if (_isInitialized) {
       _debugPrint('StatusBarTap is already initialized');
       return;
@@ -83,11 +81,13 @@ class StatusBarTap {
     _debugPrint('🚀 StatusBarTap initialized');
     _debugPrint('📱 Platform: ${Platform.operatingSystem}');
     _debugPrint(
-        '⚙️  Config: iOS=${_config.enableOnIOS}, Android=${_config.enableOnAndroid}');
+      '⚙️  Config: iOS=${_config.enableOnIOS}, Android=${_config.enableOnAndroid}',
+    );
     _debugPrint('📏 Status bar height: ${_config.statusBarHeight}px');
     _debugPrint('🎯 Tap area height: ${_getTapAreaHeight()}px');
     _debugPrint(
-        '⏱️  Scroll duration: ${_config.scrollDuration.inMilliseconds}ms');
+      '⏱️  Scroll duration: ${_config.scrollDuration.inMilliseconds}ms',
+    );
     _debugPrint('📈 Scroll curve: ${_config.scrollCurve}');
     _debugPrint('🔧 Debug mode: ${_config.debug}');
 
@@ -103,7 +103,8 @@ class StatusBarTap {
     if (!_scrollControllers.contains(controller)) {
       _scrollControllers.add(controller);
       _debugPrint(
-          '📜 ScrollController registered (total: ${_scrollControllers.length})');
+        '📜 ScrollController registered (total: ${_scrollControllers.length})',
+      );
     }
   }
 
@@ -111,15 +112,17 @@ class StatusBarTap {
   void unregisterScrollController(ScrollController controller) {
     _scrollControllers.remove(controller);
     _debugPrint(
-        '🗑️ ScrollController unregistered (remaining: ${_scrollControllers.length})');
+      '🗑️ ScrollController unregistered (remaining: ${_scrollControllers.length})',
+    );
   }
 
   void _setupGlobalTapHandler() {
     if (_handlerRegistered) return;
 
     try {
-      GestureBinding.instance.pointerRouter
-          .addGlobalRoute(_handleGlobalPointer);
+      GestureBinding.instance.pointerRouter.addGlobalRoute(
+        _handleGlobalPointer,
+      );
       _handlerRegistered = true;
       _debugPrint('✅ Global tap handler registered');
     } catch (e) {
@@ -150,7 +153,8 @@ class StatusBarTap {
 
   void _scrollAllToTop() {
     _debugPrint(
-        '🔼 Starting scroll to top for ${_scrollControllers.length} controller(s)');
+      '🔼 Starting scroll to top for ${_scrollControllers.length} controller(s)',
+    );
 
     _config.onTap?.call();
 
@@ -250,8 +254,9 @@ class StatusBarTap {
 
     if (_handlerRegistered) {
       try {
-        GestureBinding.instance.pointerRouter
-            .removeGlobalRoute(_handleGlobalPointer);
+        GestureBinding.instance.pointerRouter.removeGlobalRoute(
+          _handleGlobalPointer,
+        );
         _handlerRegistered = false;
         _debugPrint('✅ Global tap handler unregistered');
       } catch (e) {

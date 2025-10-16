@@ -73,10 +73,11 @@ void main() {
       );
 
       expect(
-          () => statusBarTap.initialize(
-                config: const StatusBarTapConfig(statusBarHeight: 44.0),
-              ),
-          returnsNormally);
+        () => statusBarTap.initialize(
+          config: const StatusBarTapConfig(statusBarHeight: 44.0),
+        ),
+        returnsNormally,
+      );
     });
 
     test('Scroll controller registration', () {
@@ -86,10 +87,14 @@ void main() {
       );
 
       final controller = ScrollController();
-      expect(() => statusBarTap.registerScrollController(controller),
-          returnsNormally);
-      expect(() => statusBarTap.unregisterScrollController(controller),
-          returnsNormally);
+      expect(
+        () => statusBarTap.registerScrollController(controller),
+        returnsNormally,
+      );
+      expect(
+        () => statusBarTap.unregisterScrollController(controller),
+        returnsNormally,
+      );
 
       controller.dispose();
     });
