@@ -1,3 +1,7 @@
+## 1.0.3
+
+- Updated example in README
+
 ## 1.0.2
 
 - Updated minimum Flutter version to 3.35.0

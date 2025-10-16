@@ -23,29 +23,50 @@ A Flutter package that enables scroll-to-top functionality when tapping the stat
 ### Basic Setup
 
 ```dart
-import 'package:status_bar_tap/status_bar_tap.dart';
 import 'package:flutter/material.dart';
+import 'package:status_bar_tap/status_bar_tap.dart';
 
-class MyScreen extends StatefulWidget {
-  @override
-  State<MyScreen> createState() => _MyScreenState();
+void main() {
+  runApp(const MyApp());
 }
 
-class _MyScreenState extends State<MyScreen> {
-  final ScrollController _scrollController = ScrollController();
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: Scaffold(body: SingleControllerScreen()));
+  }
+}
+
+class SingleControllerScreen extends StatefulWidget {
+  const SingleControllerScreen({super.key});
+
+  @override
+  State<SingleControllerScreen> createState() => _SingleControllerScreenState();
+}
+
+class _SingleControllerScreenState extends State<SingleControllerScreen> {
+  final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
+    _initializeLibrary();
+  }
+
+  void _initializeLibrary() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final double statusBarHeight = MediaQuery.of(context).padding.top;
+
       StatusBarTap().initialize(
         config: StatusBarTapConfig(
           enableOnIOS: true,
           enableOnAndroid: true,
           statusBarHeight: statusBarHeight,
+          androidTapAreaHeight: 20,
         ),
       );
+
       StatusBarTap().registerScrollController(_scrollController);
     });
   }
@@ -60,9 +81,20 @@ class _MyScreenState extends State<MyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      controller: _scrollController,
-      itemBuilder: (context, index) => ListTile(title: Text('Item $index')),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Status Bar Tap Demo')),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              controller: _scrollController,
+              itemCount: 50,
+              itemBuilder: (context, index) =>
+                  ListTile(title: Text('Item ${index + 1}')),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
