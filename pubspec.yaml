@@ -1,6 +1,6 @@
 name: status_bar_tap
 description: A Flutter package that enables scroll-to-top functionality when tapping the status bar (iOS) or top area (Android). Supports platform-specific configuration.
-version: 1.0.3
+version: 1.0.4
 homepage: https://github.com/Twwan/status_bar_tap
 repository: https://github.com/Twwan/status_bar_tap
 

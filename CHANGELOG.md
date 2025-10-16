@@ -1,3 +1,7 @@
+## 1.0.4
+
+- Added demo GIF to README
+
 ## 1.0.3
 
 - Updated example in README

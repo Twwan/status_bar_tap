@@ -12,10 +12,12 @@ A Flutter package that enables scroll-to-top functionality when tapping the stat
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/Twwan/status_bar_tap/main/assets/single.gif" alt="StatusBarTap Demo" width="300" />
+    <img src="https://raw.githubusercontent.com/Twwan/status_bar_tap/main/assets/multi.gif" alt="StatusBarTap Demo" width="300" />
 </p>
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/Twwan/status_bar_tap/main/assets/multi.gif" alt="StatusBarTap Demo" width="300" />
+    <img src="https://raw.githubusercontent.com/Twwan/status_bar_tap/main/assets/single_android.gif" alt="StatusBarTap Demo" width="300" />
+    <img src="https://raw.githubusercontent.com/Twwan/status_bar_tap/main/assets/multi_android.gif" alt="StatusBarTap Demo" width="300" />
 </p>
 
 ## Usage
