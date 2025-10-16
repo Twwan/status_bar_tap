@@ -1,7 +1,4 @@
 <p align="center">
-    <img src="[LOGO_URL]" alt="StatusBarTap Logo" width="200" />
-</p>
-<p align="center">
     <a href="https://pub.dev/packages/status_bar_tap" rel="noopener" target="_blank"><img src="https://img.shields.io/pub/v/status_bar_tap.svg" alt="Pub.dev Badge"></a>
     <a href="https://opensource.org/licenses/MIT" rel="noopener" target="_blank"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="MIT License Badge"></a>
     <a href="https://github.com/yourusername/status_bar_tap" rel="noopener" target="_blank"><img src="https://img.shields.io/badge/platform-flutter-ff69b4.svg" alt="Flutter Platform Badge"></a>
@@ -14,7 +11,11 @@
 A Flutter package that enables scroll-to-top functionality when tapping the status bar, just like in native iOS apps. Brings familiar iOS behavior to your Flutter app with full customization for both iOS and Android.
 
 <p align="center">
-    <img src="[DEMO_GIF_URL]" alt="StatusBarTap Demo" width="300" />
+    <img src="https://raw.githubusercontent.com/Twwan/status_bar_tap/main/assets/single.gif" alt="StatusBarTap Demo" width="300" />
+</p>
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/Twwan/status_bar_tap/main/assets/multi.gif" alt="StatusBarTap Demo" width="300" />
 </p>
 
 ## Usage
@@ -130,10 +131,6 @@ StatusBarTap().registerScrollController(_sidebarController);
 
 **Q:** Can I use multiple scroll controllers?<br>
 **A:** Yes! Register multiple controllers and they'll all scroll to top on status bar tap.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
