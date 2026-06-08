@@ -57,14 +57,15 @@ class StatusBarTapConfig {
 }
 
 /// Main class for handling status bar taps
-class StatusBarTap {
+class StatusBarTap with WidgetsBindingObserver {
   static final StatusBarTap _instance = StatusBarTap._internal();
   factory StatusBarTap() => _instance;
   StatusBarTap._internal();
 
   late StatusBarTapConfig _config;
   bool _isInitialized = false;
-  bool _handlerRegistered = false;
+  bool _pointerHandlerRegistered = false;
+  bool _observerRegistered = false;
 
   final List<ScrollController> _scrollControllers = [];
 
@@ -92,7 +93,11 @@ class StatusBarTap {
     _debugPrint('🔧 Debug mode: ${_config.debug}');
 
     if (_config.isEnabled) {
-      _setupGlobalTapHandler();
+      if (Platform.isIOS) {
+        _setupStatusBarObserver();
+      } else if (Platform.isAndroid) {
+        _setupPointerTapHandler();
+      }
     } else {
       _debugPrint('❌ StatusBarTap disabled for this platform');
     }
@@ -116,14 +121,36 @@ class StatusBarTap {
     );
   }
 
-  void _setupGlobalTapHandler() {
-    if (_handlerRegistered) return;
+  @override
+  void handleStatusBarTap() {
+    if (!_isInitialized || !Platform.isIOS || !_config.enableOnIOS) {
+      return;
+    }
+
+    _debugPrint('🎯 Status bar tapped');
+    _scrollAllToTop();
+  }
+
+  void _setupStatusBarObserver() {
+    if (_observerRegistered) return;
+
+    try {
+      WidgetsBinding.instance.addObserver(this);
+      _observerRegistered = true;
+      _debugPrint('✅ Status bar observer registered');
+    } catch (e) {
+      _debugPrint('❌ Failed to setup status bar observer: $e');
+    }
+  }
+
+  void _setupPointerTapHandler() {
+    if (_pointerHandlerRegistered) return;
 
     try {
       GestureBinding.instance.pointerRouter.addGlobalRoute(
         _handleGlobalPointer,
       );
-      _handlerRegistered = true;
+      _pointerHandlerRegistered = true;
       _debugPrint('✅ Global tap handler registered');
     } catch (e) {
       _debugPrint('❌ Failed to setup global tap handler: $e');
@@ -158,7 +185,7 @@ class StatusBarTap {
 
     _config.onTap?.call();
 
-    for (final controller in _scrollControllers) {
+    for (final ScrollController controller in _scrollControllers) {
       if (controller.hasClients) {
         _debugPrint('   📜 Scrolling controller: hasClients=true');
         _scrollToTop(controller);
@@ -192,7 +219,7 @@ class StatusBarTap {
 
   /// Wrap your scaffold with debug visualizer
   Widget wrapWithDebugVisual({required Widget child}) {
-    if (!_config.debugVisual) return child;
+    if (!_isInitialized || !_config.debugVisual) return child;
 
     return Stack(
       children: [
@@ -252,15 +279,25 @@ class StatusBarTap {
 
     _debugPrint('🛑 Disposing StatusBarTap...');
 
-    if (_handlerRegistered) {
+    if (_observerRegistered) {
+      try {
+        WidgetsBinding.instance.removeObserver(this);
+        _observerRegistered = false;
+        _debugPrint('✅ Status bar observer unregistered');
+      } catch (e) {
+        _debugPrint('❌ Error during observer dispose: $e');
+      }
+    }
+
+    if (_pointerHandlerRegistered) {
       try {
         GestureBinding.instance.pointerRouter.removeGlobalRoute(
           _handleGlobalPointer,
         );
-        _handlerRegistered = false;
+        _pointerHandlerRegistered = false;
         _debugPrint('✅ Global tap handler unregistered');
       } catch (e) {
-        _debugPrint('❌ Error during dispose: $e');
+        _debugPrint('❌ Error during pointer handler dispose: $e');
       }
     }
 

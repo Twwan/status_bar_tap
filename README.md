@@ -20,6 +20,14 @@ A Flutter package that enables scroll-to-top functionality when tapping the stat
     <img src="https://raw.githubusercontent.com/Twwan/status_bar_tap/main/assets/multi_android.gif" alt="StatusBarTap Demo" width="300" />
 </p>
 
+## Flutter version compatibility
+
+
+| Flutter SDK           | Package version |
+| --------------------- | --------------- |
+| `>=3.35.0`, `<3.41.0` | `1.0.4`         |
+| `>=3.41.0`            | `1.1.0`         |
+
 ## Usage
 
 ### Basic Setup
